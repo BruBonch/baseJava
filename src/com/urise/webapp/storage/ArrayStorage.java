@@ -18,10 +18,9 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        int index = getResumeIndex(resume.getUuid());
-        if (size == storage.length) {
+        if (size >= STORAGE_LIMIT) {
             System.out.println("Error. No free space for resumes in the storage");
-        } else if (index != -1) {
+        } else if (getResumeIndex(resume.getUuid()) != -1) {
             System.out.println("Error. Resume with ID - " + resume.getUuid() + " already create");
         } else {
             storage[size] = resume;
@@ -40,14 +39,13 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        Resume resume = null;
         int index = getResumeIndex(uuid);
         if (index == -1) {
             System.out.println("Error. Resume with ID - " + uuid + " not found");
         } else {
-            resume = storage[index];
+            return storage[index];
         }
-        return resume;
+        return null;
     }
 
     public void delete(String uuid) {
